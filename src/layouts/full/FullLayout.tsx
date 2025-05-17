@@ -3,7 +3,6 @@ import { useSelector } from 'store/Store';
 import { AppState } from 'store/Store';
 import Header from './vertical/header/Header';
 import Sidebar from './vertical/sidebar/Sidebar';
-import Customizer from './shared/customizer/Customizer';
 
 const MainWrapper = styled('div')(() => ({
   display: 'flex',

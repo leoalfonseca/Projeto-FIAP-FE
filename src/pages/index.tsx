@@ -1,34 +1,40 @@
-import Link from 'next/link';
-import { Grid, Box, Card, Stack, Typography } from '@mui/material';
-
-// components
+import { Grid, Box } from '@mui/material';
 import PageContainer from 'components/container/PageContainer';
-import Logo from 'layouts/full/shared/logo/Logo';
-import AuthLogin from './auth/authForms/AuthLogin';
+import Image from 'next/image';
 
 const Login2 = () => {
   return (
     <PageContainer>
       <Box
         sx={{
+          height: '75vh',
           position: 'relative',
-          '&:before': {
-            content: '""',
-            background: 'radial-gradient(#d2f1df, #d3d7fa, #bad8f4)',
-            backgroundSize: '400% 400%',
-            animation: 'gradient 15s ease infinite',
-            position: 'absolute',
-            height: '100%',
-            width: '100%',
-            opacity: '0.3',
-          },
+          overflow: 'hidden',
         }}
       >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'linear-gradient(to bottom, #004D61 0%, #FFFFFF 100%)',
+            zIndex: 0,
+          }}
+        />
+
         <Grid
           container
+          direction={'column'}
           spacing={0}
           justifyContent="center"
-          sx={{ height: '100vh' }}
+          alignItems="center"
+          sx={{
+            height: '80vh',
+            position: 'relative',
+            zIndex: 1,
+          }}
         >
           <Grid
             item
@@ -40,15 +46,35 @@ const Login2 = () => {
             justifyContent="center"
             alignItems="center"
           >
-            <Card
-              elevation={9}
-              sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: '450px' }}
-            >
-              <Box display="flex" alignItems="center" justifyContent="center">
-                <Logo />
-              </Box>
-              <AuthLogin />
-            </Card>
+            <Box display="flex" alignItems="center" justifyContent="center">
+              <Image
+                src="/images/banner_1.png"
+                alt="logo"
+                height={300}
+                width={800}
+                priority
+              />
+            </Box>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            lg={5}
+            xl={4}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Box display="flex" alignItems="center" justifyContent="center">
+              <Image
+                src="/images/banner_2.png"
+                alt="logo"
+                height={200}
+                width={800}
+                priority
+              />
+            </Box>
           </Grid>
         </Grid>
       </Box>
@@ -56,5 +82,5 @@ const Login2 = () => {
   );
 };
 
-Login2.layout = 'Blank';
+Login2.layout = 'Public';
 export default Login2;

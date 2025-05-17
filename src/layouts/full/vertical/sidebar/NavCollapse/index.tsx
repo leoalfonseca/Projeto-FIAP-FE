@@ -18,7 +18,6 @@ import NavItem from "../NavItem";
 
 // plugins
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
-import { useTranslation } from "react-i18next";
 import { AppState } from "../../../../../store/Store";
 
 type NavGroupProps = {
@@ -39,7 +38,6 @@ interface NavCollapseProps {
   onClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
-// FC Component For Dropdown Menu
 const NavCollapse = ({
   menu,
   level,
@@ -52,7 +50,6 @@ const NavCollapse = ({
   const Icon = menu?.icon;
   const theme = useTheme();
   const { pathname } = useRouter();
-  const { t } = useTranslation();
   const [open, setOpen] = useState(true);
   const menuIcon =
     level > 1 ? (
@@ -65,7 +62,6 @@ const NavCollapse = ({
     setOpen(!open);
   };
 
-  // menu collapse for sub-levels
   React.useEffect(() => {
     setOpen(false);
     menu?.children?.forEach((item: any) => {
@@ -145,7 +141,7 @@ const NavCollapse = ({
           {menuIcon}
         </ListItemIcon>
         <ListItemText color="inherit">
-          {hideMenu ? "" : <>{t(`${menu.title}`)}</>}
+          {hideMenu ? "" : <>{menu.title}</>}
         </ListItemText>
         {!open ? (
           <IconChevronDown size="1rem" />

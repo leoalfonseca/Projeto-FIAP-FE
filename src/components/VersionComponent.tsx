@@ -5,7 +5,6 @@ import {
   styled,
   tooltipClasses,
 } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 import packageJson from '../../package.json';
 import { toast } from 'react-toastify';
 import { api } from 'services/api';
@@ -23,7 +22,6 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
 }));
 
 function VersionComponent() {
-  const { t } = useTranslation();
   const [version, setVersion] = useState('');
 
   const getVersion = async () => {
@@ -40,7 +38,7 @@ function VersionComponent() {
   });
 
   return (
-    <LightTooltip title={t('Versão')} placement="top">
+    <LightTooltip title={'Versão'} placement="top">
       <Typography
         sx={{
           textAlign: 'center',

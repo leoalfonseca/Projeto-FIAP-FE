@@ -12,9 +12,9 @@ const baselightTheme = {
       dark: '#23afdb',
     },
     success: {
-      main: '#13DEB9',
-      light: '#E6FFFA',
-      dark: '#02b3a9',
+      main: '#42A731',
+      light: '#42A731',
+      dark: '#4570EA',
       contrastText: '#ffffff',
     },
     info: {
@@ -76,9 +76,9 @@ const baseDarkTheme = {
       dark: '#173f98',
     },
     success: {
-      main: '#13DEB9',
-      light: '#1B3C48',
-      dark: '#02b3a9',
+      main: '#42A731',
+      light: '#42A731',
+      dark: '#4570EA',
       contrastText: '#ffffff',
     },
     info: {

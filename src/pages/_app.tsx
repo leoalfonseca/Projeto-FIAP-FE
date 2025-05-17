@@ -7,8 +7,6 @@ import { ThemeSettings } from 'theme/Theme';
 import createEmotionCache from 'createEmotionCache';
 import { Provider } from 'react-redux';
 import Store from 'store/Store';
-import { useSelector } from 'store/Store';
-import { AppState } from 'store/Store';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import BlankLayout from 'layouts/blank/BlankLayout';
@@ -20,6 +18,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { AuthProvider } from 'context/AuthContext';
 
 import './styles.css';
+import PublicLayout from 'layouts/public/PublicLayout';
 const clientSideEmotionCache = createEmotionCache();
 
 interface MyAppProps extends AppProps {
@@ -28,6 +27,7 @@ interface MyAppProps extends AppProps {
 
 const layouts: any = {
   Blank: BlankLayout,
+  Public: PublicLayout
 };
 
 const MyApp = (props: MyAppProps) => {
@@ -37,9 +37,7 @@ const MyApp = (props: MyAppProps) => {
     pageProps,
   }: any = props;
   const theme = ThemeSettings();
-  const customizer = useSelector((state: AppState) => state.customizer);
 
-  const layout = pageProps.layout || 'Full';
   const Layout = layouts[Component.layout] || FullLayout;
 
   return (

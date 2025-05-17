@@ -59,22 +59,6 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
 
       {subtext}
 
-      {/* <AuthSocialButtons title="Entrar com" />
-      <Box mt={3}>
-        <Divider>
-          <Typography
-            component="span"
-            color="textSecondary"
-            variant="h6"
-            fontWeight="400"
-            position="relative"
-            px={2}
-          >
-            ou entre com
-          </Typography>
-        </Divider>
-      </Box> */}
-
       <Stack>
         <Box>
           <CustomFormLabel htmlFor="username">Usuário</CustomFormLabel>
