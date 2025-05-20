@@ -1,4 +1,3 @@
-import { storageGetToken, storageRemoveToken } from "storage/storageToken";
 import axios from "axios";
 
 const api = axios.create({
@@ -7,12 +6,6 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(async (config) => {
-  const token = storageGetToken();
-
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-
   return config;
 });
 
@@ -21,7 +14,6 @@ api.interceptors.response.use(
   async (error) => {
     console.error(error)
     if (error.response.status === 401) {
-      await storageRemoveToken();
       window.location.replace("/");
     }
 

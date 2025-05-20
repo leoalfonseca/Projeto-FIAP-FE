@@ -32,12 +32,10 @@ const RevenueUpdates = () => {
   };
 
 
-  // chart color
   const theme = useTheme();
   const primary = theme.palette.primary.main;
   const secondary = theme.palette.secondary.main;
 
-  // chart
   const optionscolumnchart: any = {
     chart: {
       type: 'bar',
@@ -145,7 +143,6 @@ const RevenueUpdates = () => {
             />
           </Box>
         </Grid>
-        {/* column */}
         <Grid item xs={12} sm={4}>
           <Stack spacing={3} mt={3}>
             <Stack direction="column" spacing={2} alignItems="start">

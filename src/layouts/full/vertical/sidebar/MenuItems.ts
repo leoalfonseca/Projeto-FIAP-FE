@@ -16,6 +16,7 @@ interface MenuitemsType {
 }
 import {
   IconHome,
+  IconReportMoney,
 } from '@tabler/icons-react';
 
 const Menuitems: MenuitemsType[] = [
@@ -28,6 +29,12 @@ const Menuitems: MenuitemsType[] = [
     title: 'Início',
     icon: IconHome,
     href: '/home',
+  },
+  {
+    id: uniqueId(),
+    title: 'Transações',
+    icon: IconReportMoney,
+    href: '/transactions',
   },
 ];
 

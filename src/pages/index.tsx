@@ -10,6 +10,7 @@ const Login2 = () => {
           height: '75vh',
           position: 'relative',
           overflow: 'hidden',
+          borderRadius: 0
         }}
       >
         <Box
@@ -21,6 +22,7 @@ const Login2 = () => {
             height: '100%',
             background: 'linear-gradient(to bottom, #004D61 0%, #FFFFFF 100%)',
             zIndex: 0,
+            borderRadius: 0
           }}
         />
 

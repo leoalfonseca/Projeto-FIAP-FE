@@ -14,7 +14,6 @@ import {
   setDarkMode,
 } from '../../../../store/customizer/CustomizerSlice';
 import { IconMenu2, IconMoon, IconSun } from '@tabler/icons-react';
-import Notifications from './Notification';
 import Profile from './Profile';
 import { AppState } from '../../../../store/Store';
 import MobileRightSidebar from './MobileRightSidebar';
@@ -66,8 +65,6 @@ const Header = () => {
 
         <Box flexGrow={1} />
         <Stack spacing={1} direction="row" alignItems="center">
-          {/* <Language /> */}
-
           <IconButton onClick={handleDarkMode}>
             {customizer.activeMode === 'light' ? (
               <IconMoon size="20" />
@@ -75,7 +72,6 @@ const Header = () => {
               <IconSun size="20" />
             )}
           </IconButton>
-          <Notifications />
           {lgDown ? <MobileRightSidebar /> : null}
           <Profile />
         </Stack>

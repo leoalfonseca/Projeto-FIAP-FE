@@ -1,7 +1,7 @@
 import { useTheme } from '@mui/material/styles';
-import { Stack, Typography, Avatar, Box, IconButton } from '@mui/material';
+import { Stack, Typography, Avatar, Box } from '@mui/material';
 import DashboardCard from '../../shared/DashboardCard';
-import { IconCoin, IconEdit, IconLogout2, IconTrash } from '@tabler/icons-react';
+import { IconCoin, IconLogout2 } from '@tabler/icons-react';
 
 const Transactions = () => {
   const theme = useTheme();
@@ -89,33 +89,7 @@ const Transactions = () => {
                   </Typography>
                 </Box>
               </Stack>
-              <Stack direction="row" spacing={2} alignItems="center">
-                <Avatar
-                  sx={{
-                    bgcolor: 'transparent',
-                    color: 'primary.main',
-                    width: 42,
-                    height: 40,
-                  }}
-                >
-                   <IconButton size="small" sx={{color: stat.color}}>
-                    <IconEdit size={16} />
-                  </IconButton>
-                </Avatar>
-                <Avatar
-                  sx={{
-                    bgcolor: 'transparent',
-                    color: 'primary.main',
-                    width: 42,
-                    height: 40,
-                  }}
-                >
-                  <IconButton size="small" sx={{color: stat.color}}>
-                    <IconTrash size={16} />
-                  </IconButton>
-                </Avatar>
 
-              </Stack>
             </Stack>
           ))}
         </Stack>

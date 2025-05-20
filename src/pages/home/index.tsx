@@ -3,6 +3,7 @@ import PageContainer from 'components/container/PageContainer';
 import NewTransaction from 'components/dashboards/modern/NewTransaction';
 
 import RevenueUpdates from 'components/dashboards/modern/RevenueUpdates';
+import LastTransactions from 'components/dashboards/modern/LastTransactions';
 import Transactions from 'components/dashboards/modern/Transactions';
 import Head from 'next/head';
 
@@ -20,8 +21,8 @@ const Modern = () => {
           <Grid item xs={12} lg={4}>
             <Transactions />
           </Grid>
-          <Grid item xs={12} lg={12}>
-            <NewTransaction />
+          <Grid item xs={24} lg={24}>
+            <LastTransactions />
           </Grid>
         </Grid>
     </Box>

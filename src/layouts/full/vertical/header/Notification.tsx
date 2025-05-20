@@ -44,9 +44,6 @@ const Notifications = () => {
           <IconBellRinging size="21" stroke="1.5" />
         </Badge>
       </IconButton>
-      {/* ------------------------------------------- */}
-      {/* Message Dropdown */}
-      {/* ------------------------------------------- */}
       <Menu
         id="msgs-menu"
         anchorEl={anchorEl2}

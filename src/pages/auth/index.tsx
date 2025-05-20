@@ -12,13 +12,10 @@ const Login2 = () => {
           position: 'relative',
           '&:before': {
             content: '""',
-            background: 'radial-gradient(#d2f1df, #d3d7fa, #bad8f4)',
-            backgroundSize: '400% 400%',
-            animation: 'gradient 15s ease infinite',
+            background: 'linear-gradient(to bottom, #004D61 0%, #FFFFFF 100%)',
             position: 'absolute',
             height: '100%',
             width: '100%',
-            opacity: '0.3',
           },
         }}
       >
