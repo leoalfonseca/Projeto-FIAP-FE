@@ -1,4 +1,5 @@
 import {
+  Button,
   FormControl,
   Grid,
   InputLabel,
@@ -27,6 +28,7 @@ interface IFormValues {
   time: string;
   value: string;
   paymentMethod: string;
+  attachment: File | null;
 }
 
 const TransactionsRegisterForm = ({ open, handleClose, onHandleTransaction }: ITransactionsRegisterProps) => {
@@ -36,6 +38,7 @@ const TransactionsRegisterForm = ({ open, handleClose, onHandleTransaction }: IT
     time: yup.string().required('Campo Obrigatório'),
     value: yup.string().required('Campo Obrigatório'),
     paymentMethod: yup.string().required('Campo Obrigatório'),
+    attachment: yup.mixed().nullable(),
   });
 
   const initialValues: IFormValues = {
@@ -44,6 +47,7 @@ const TransactionsRegisterForm = ({ open, handleClose, onHandleTransaction }: IT
     time: setHours(setMinutes(new Date(), 0), 12).toISOString(),
     value: '',
     paymentMethod: '',
+    attachment: null
   };
 
   const formik = useFormik({
@@ -69,6 +73,7 @@ const TransactionsRegisterForm = ({ open, handleClose, onHandleTransaction }: IT
     handleClose();
     formik.resetForm();
   };
+
 
   return (
     <GenericModal
@@ -160,6 +165,39 @@ const TransactionsRegisterForm = ({ open, handleClose, onHandleTransaction }: IT
             <Typography color="error">
               {formik.touched.paymentMethod && formik.errors.paymentMethod}
             </Typography>
+          </FormControl>
+        </Grid>
+        <Grid item xs={6}>
+          <FormControl fullWidth>
+            <Typography variant="subtitle2" mb={1}>
+              Anexo (Recibo ou Comprovante)
+            </Typography>
+            <Grid container spacing={1}>
+              <Grid item xs={9}>
+                <TextField
+                  disabled
+                  fullWidth
+                  value={formik.values.attachment?.name || ''}
+                  placeholder="Nenhum arquivo selecionado"
+                />
+              </Grid>
+              <Grid item xs={3} mt={0.5}>
+                <Button
+                  variant="contained"
+                  component="label"
+                  fullWidth
+                >
+                  Selecionar
+                  <input
+                    type="file"
+                    hidden
+                    onChange={(event) => {
+                      formik.setFieldValue('attachment', event.currentTarget.files?.[0] ?? null);
+                    }}
+                  />
+                </Button>
+              </Grid>
+            </Grid>
           </FormControl>
         </Grid>
       </Grid>

@@ -6,6 +6,7 @@ import {
   TextField,
   Typography,
   Select,
+  Button,
 } from '@mui/material';
 import { TimePicker } from '@mui/x-date-pickers';
 import GenericModal from 'components/genericModal/baseModal';
@@ -35,6 +36,7 @@ const EditTransactionForm = ({
     time: '',
     value: '',
     paymentMethod: '',
+    attachment: null,
   });
 
   const schemaTransactions = yup.object({
@@ -42,6 +44,7 @@ const EditTransactionForm = ({
     time: yup.date().required('Campo obrigatório'),
     value: yup.string().required('Campo obrigatório'),
     paymentMethod: yup.string().required('Campo obrigatório'),
+    attachment: yup.mixed().nullable(),
   });
 
   const formik = useFormik({
@@ -57,7 +60,13 @@ const EditTransactionForm = ({
         const changes: Partial<TransactionType> = {};
         for (const key of Object.keys(values) as (keyof TransactionType)[]) {
           if (values[key] !== transaction[key]) {
-            changes[key] = values[key];
+            if (key === 'attachment') {
+              if (values.attachment !== null && values.attachment !== undefined) {
+                changes.attachment = values.attachment;
+              }
+            } else {
+              changes[key] = values[key];
+            }
           }
         }
 
@@ -76,18 +85,18 @@ const EditTransactionForm = ({
     formik.resetForm();
   };
 
-useEffect(() => {
-  if (transaction) {
-    const [hours, minutes] = transaction.time.split(':').map(Number);
-    const dateWithTime = new Date();
-    dateWithTime.setHours(hours, minutes, 0, 0);
+  useEffect(() => {
+    if (transaction) {
+      const [hours, minutes] = transaction.time.split(':').map(Number);
+      const dateWithTime = new Date();
+      dateWithTime.setHours(hours, minutes, 0, 0);
 
-    setInitialValues({
-      ...transaction,
-      time: dateWithTime.toISOString(),
-    });
-  }
-}, [transaction]);
+      setInitialValues({
+        ...transaction,
+        time: dateWithTime.toISOString(),
+      });
+    }
+  }, [transaction]);
 
 
   return (
@@ -145,7 +154,7 @@ useEffect(() => {
           </Typography>
         </Grid>
 
-         <Grid item xs={12}>
+        <Grid item xs={12}>
           <FormControl fullWidth>
             <TimePicker
               label="Hora *"
@@ -183,6 +192,39 @@ useEffect(() => {
             <Typography color="error">
               {formik.touched.paymentMethod && formik.errors.paymentMethod}
             </Typography>
+          </FormControl>
+        </Grid>
+        <Grid item xs={6}>
+          <FormControl fullWidth>
+            <Typography variant="subtitle2" mb={1}>
+              Anexo (Recibo ou Comprovante)
+            </Typography>
+            <Grid container spacing={1}>
+              <Grid item xs={9}>
+                <TextField
+                  disabled
+                  fullWidth
+                  value={formik.values.attachment?.name || ''}
+                  placeholder="Nenhum arquivo selecionado"
+                />
+              </Grid>
+              <Grid item xs={3} mt={0.5}>
+                <Button
+                  variant="contained"
+                  component="label"
+                  fullWidth
+                >
+                  Selecionar
+                  <input
+                    type="file"
+                    hidden
+                    onChange={(event) => {
+                      formik.setFieldValue('attachment', event.currentTarget.files?.[0] ?? null);
+                    }}
+                  />
+                </Button>
+              </Grid>
+            </Grid>
           </FormControl>
         </Grid>
       </Grid>

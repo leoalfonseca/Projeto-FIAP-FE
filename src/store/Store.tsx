@@ -7,17 +7,20 @@ import {
   useSelector as useAppSelector,
   TypedUseSelectorHook,
 } from "react-redux";
+import WidgetReducer from './widgets/WidgetSlice';
 
 export const store = configureStore({
   reducer: {
     customizer: CustomizerReducer,
     userpostsReducer: UserProfileReducer,
+    widgets: WidgetReducer
   },
 });
 
 const rootReducer = combineReducers({
   customizer: CustomizerReducer,
   userpostsReducer: UserProfileReducer,
+  widgets: WidgetReducer
 });
 
 export type AppState = ReturnType<typeof rootReducer>;

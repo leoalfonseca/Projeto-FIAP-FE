@@ -1,32 +1,33 @@
-import { Box, Grid } from '@mui/material';
-import PageContainer from 'components/container/PageContainer';
-import NewTransaction from 'components/dashboards/modern/NewTransaction';
+import { Grid } from '@mui/material';
 
 import RevenueUpdates from 'components/dashboards/modern/RevenueUpdates';
 import LastTransactions from 'components/dashboards/modern/LastTransactions';
 import Transactions from 'components/dashboards/modern/Transactions';
-import Head from 'next/head';
+import MonthlyEarnings from 'components/dashboards/modern/MonthlyEarnings';
+import YearlyBreakup from 'components/dashboards/modern/YearlyBreakup';
+import { useSelector } from 'store/Store';
 
 const Modern = () => {
+  const widgets = useSelector((state) => state.widgets);
+
   return (
-    <PageContainer>
-      <Head>
-        <title>Dashboard</title>
-      </Head>
-      <Box>
-        <Grid container spacing={3}>
-          <Grid item xs={12} lg={8}>
-            <RevenueUpdates />
-          </Grid>
-          <Grid item xs={12} lg={4}>
-            <Transactions />
-          </Grid>
-          <Grid item xs={24} lg={24}>
-            <LastTransactions />
-          </Grid>
-        </Grid>
-    </Box>
-    </PageContainer >
+    <Grid container spacing={3}>
+      {widgets.revenueUpdates && (
+        <Grid item xs={12} lg={8}><RevenueUpdates /></Grid>
+      )}
+      {widgets.transactions && (
+        <Grid item xs={12} lg={4}><Transactions /></Grid>
+      )}
+      {widgets.monthlyEarnings && (
+        <Grid item xs={12} lg={8}><MonthlyEarnings /></Grid>
+      )}
+      {widgets.yearlyBreakup && (
+        <Grid item xs={12} lg={4}><YearlyBreakup /></Grid>
+      )}
+      {widgets.lastTransactions && (
+        <Grid item xs={24} lg={12}><LastTransactions /></Grid>
+      )}
+    </Grid>
   );
 };
 

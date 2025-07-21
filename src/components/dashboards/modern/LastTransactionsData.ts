@@ -4,6 +4,7 @@ export interface TransactionType {
   time: string;
   paymentMethod: string;
   value: string;
+  attachment?: File | null;
 }
 
 const TopPerformerData: TransactionType[] = [

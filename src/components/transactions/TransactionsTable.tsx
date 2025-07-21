@@ -1,18 +1,17 @@
-import { Box, Button, Grid } from '@mui/material';
+import { Box, Button, FormControl, Grid, InputLabel, OutlinedInput, TextField, Tooltip } from '@mui/material';
 import { DataGrid, ptBR } from '@mui/x-data-grid';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { IconEdit, IconPlus, IconTrash } from '@tabler/icons-react';
+import { IconDownload, IconEdit, IconPlus, IconSearch, IconTrash } from '@tabler/icons-react';
 import ptBRLocale from 'date-fns/locale/pt-BR';
 import TransactionsRegisterForm from './TransactionsRegisterForm';
 import { useEffect, useState } from 'react';
 import EditTransactionForm from './EditTransactionForm';
 import { useSelector } from 'react-redux';
 import { AppState } from 'store/Store';
-import { TransactionType } from 'components/dashboards/modern/LastTransactionsData';
 import { IValueGetter } from 'types/valueGetter';
 import CustomChip from 'components/CustomChip';
-import { mockTransactions } from './MockTransactions';
+import { mockTransactions, TransactionType } from './MockTransactions';
 
 const TransactionsTable = () => {
 
@@ -69,9 +68,43 @@ const TransactionsTable = () => {
       minWidth: 240,
       headerClassName: 'header',
       renderCell: (params: { row: any }) => (
-        <Box>
-          <Button
-            startIcon={<IconEdit />}
+        <Box gap={1} display="flex" alignItems="center">
+          {params.row.attachment instanceof File && (
+            <Tooltip title="Baixar anexo">
+              <Button
+                startIcon={< IconDownload />}
+                onClick={() => handleDownloadAttachment(params.row.attachment)}
+                sx={
+                  customizer.activeMode === 'dark'
+                    ? {
+                      color: '#EAEFF4',
+                      mr: 0.8,
+                      '&:hover': {
+                        color: '#EAEFF4',
+                      },
+                      '& .MuiButton-startIcon': {
+                        margin: 'auto',
+                      },
+                    }
+                    : {
+                      color: '#ffffff',
+                      mr: 0.8,
+                      '&:hover': {
+                        backgroundColor: '#4261b7',
+                        color: '#ffffff',
+                      },
+                      '& .MuiButton-startIcon': {
+                        margin: 'auto',
+                      },
+                    }
+                }
+              >
+              </Button>
+            </Tooltip>
+          )
+          }
+          < Button
+            startIcon={< IconEdit />}
             onClick={() => handleEdit(params.row.id)}
             sx={
               customizer.activeMode === 'dark'
@@ -101,12 +134,13 @@ const TransactionsTable = () => {
           <Button onClick={() => handleDeleteTransaction(params.row.id)} color="error">
             <IconTrash />
           </Button>
-        </Box>
+        </Box >
       ),
     },
   ];
 
   const [rows, setRows] = useState<TransactionType[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState<TransactionType | null>(null);
@@ -152,10 +186,29 @@ const TransactionsTable = () => {
     setRows((prevRows) => prevRows.filter((transaction) => transaction.id !== id));
   };
 
+  const handleDownloadAttachment = (file: File) => {
+    const url = URL.createObjectURL(file);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', file.name);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+
 
   useEffect(() => {
     getTransactions();
   }, []);
+
+  const filteredRows = rows.filter((row) =>
+    Object.values(row).some((value) =>
+      String(value).toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  ).reverse();
+
 
   return (
     <LocalizationProvider
@@ -165,11 +218,23 @@ const TransactionsTable = () => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Box
-            display={'flex'}
-            alignItems={'right'}
-            justifyContent={'right'}
-            marginRight={5}
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            paddingX={5}
           >
+            <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+              <InputLabel htmlFor="filter">Pesquisar</InputLabel>
+              <OutlinedInput
+                id="filter"
+                label="Pesquisar"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="PIX"
+                sx={{ minWidth: 150 }}
+                endAdornment={<IconSearch />}
+              />
+            </FormControl>
             <Button
               onClick={handleOpen}
               startIcon={<IconPlus />}
@@ -177,21 +242,13 @@ const TransactionsTable = () => {
                 customizer.activeMode === 'dark'
                   ? {
                     color: '#EAEFF4',
-                    '&:hover': {
-                      color: '#EAEFF4',
-                    },
-                    '& .MuiButton-startIcon': {
-                      margin: 'auto',
-                    },
+                    '&:hover': { color: '#EAEFF4' },
+                    '& .MuiButton-startIcon': { margin: 'auto' },
                   }
                   : {
                     color: '#ffffff',
-                    '&:hover': {
-                      color: '#ffffff',
-                    },
-                    '& .MuiButton-startIcon': {
-                      margin: 'auto',
-                    },
+                    '&:hover': { color: '#ffffff' },
+                    '& .MuiButton-startIcon': { margin: 'auto' },
                   }
               }
             >
@@ -199,6 +256,7 @@ const TransactionsTable = () => {
             </Button>
           </Box>
         </Grid>
+
 
         <Grid item xs={12}>
           <Box
@@ -212,7 +270,7 @@ const TransactionsTable = () => {
             }}
           >
             <DataGrid
-              rows={rows}
+              rows={filteredRows}
               columns={columns}
               hideFooterSelectedRowCount
               initialState={{
