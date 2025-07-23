@@ -1,0 +1,17 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: core
+spec:
+  owner: codgital
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: library-account-types
+spec:
+  type: library
+  lifecycle: experimental
+  owner: codgital
+  system: core

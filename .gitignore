@@ -1,5 +1,4 @@
 node_modules
-.next
-package-lock.json
-yarn.lock
-.env
+core/node_modules
+core/.next
+types/node_modules

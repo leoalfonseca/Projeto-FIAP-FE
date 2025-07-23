@@ -1,4 +1,6 @@
 node_modules
-.next
+core/node_modules
+types/node_modules
+core/.next
 Dockerfile
 .dockerignore
