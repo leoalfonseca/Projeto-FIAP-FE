@@ -8,10 +8,11 @@ import TransactionsRegisterForm from './TransactionsRegisterForm';
 import { useEffect, useState } from 'react';
 import EditTransactionForm from './EditTransactionForm';
 import { useSelector } from 'react-redux';
-import { AppState } from 'store/Store';
+import { AppState, useDispatch } from 'store/Store';
 import { IValueGetter } from 'types/valueGetter';
 import CustomChip from 'components/CustomChip';
 import { mockTransactions, TransactionType } from './MockTransactions';
+import { addTransaction, deleteTransaction, editTransaction, setEditingTransaction } from 'store/transactions/TransactionsSlice';
 
 const TransactionsTable = () => {
 
@@ -139,12 +140,14 @@ const TransactionsTable = () => {
     },
   ];
 
-  const [rows, setRows] = useState<TransactionType[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
-  const [editingTransaction, setEditingTransaction] = useState<TransactionType | null>(null);
   const customizer = useSelector((state: AppState) => state.customizer);
+
+  const dispatch = useDispatch();
+  const rows = useSelector((state: AppState) => state.transactions.list);
+  const editingTransaction = useSelector((state: AppState) => state.transactions.editing);
 
   const handleOpen = () => setOpen(true);
 
@@ -161,30 +164,22 @@ const TransactionsTable = () => {
     setOpenEdit(false);
   };
 
-  const getTransactions = async () => {
-    setRows(mockTransactions);
-  };
-
   const handleEdit = (id: string) => {
     const objToEdit = rows.find((transaction) => transaction.id === id);
-
     if (objToEdit) {
-      setEditingTransaction(objToEdit);
+      dispatch(setEditingTransaction(objToEdit));
       handleOpenEdit();
     }
   };
 
   const handleConfirmEdit = (id: string, data: Partial<TransactionType>) => {
-    const updated = rows.map((transaction) =>
-      transaction.id === id ? { ...transaction, ...data } : transaction
-    );
-    setRows(updated);
+    dispatch(editTransaction({ id, data }));
   };
-
 
   const handleDeleteTransaction = (id: string) => {
-    setRows((prevRows) => prevRows.filter((transaction) => transaction.id !== id));
+    dispatch(deleteTransaction(id));
   };
+
 
   const handleDownloadAttachment = (file: File) => {
     const url = URL.createObjectURL(file);
@@ -198,10 +193,6 @@ const TransactionsTable = () => {
   };
 
 
-
-  useEffect(() => {
-    getTransactions();
-  }, []);
 
   const filteredRows = rows.filter((row) =>
     Object.values(row).some((value) =>
@@ -298,7 +289,8 @@ const TransactionsTable = () => {
         </Grid>
       </Grid>
 
-      <TransactionsRegisterForm open={open} handleClose={handleClose} onHandleTransaction={(transaction) => setRows([...rows, transaction])} />
+      <TransactionsRegisterForm open={open} handleClose={handleClose} onHandleTransaction={(transaction) => dispatch(addTransaction(transaction))}
+ />
       <EditTransactionForm
         open={openEdit}
         handleClose={handleClose}

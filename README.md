@@ -16,6 +16,8 @@ www.figma.com/design/ns5TC3X5Xr8V7I3LYKg9KA/Projeto-Financeiro?node-id=503-4264
 
 - Dashboard
 - Módulo de Transações
+- Controle de Widgets do Dash via Redux
+- Anexo de Comprovante de Transação
 
 ## Tech Stack
 
